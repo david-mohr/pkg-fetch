@@ -257,7 +257,7 @@ new file mode 100644
      try {
 --- node/lib/internal/modules/cjs/loader.js
 +++ node/lib/internal/modules/cjs/loader.js
-@@ -70,7 +70,7 @@
+@@ -70,7 +70,8 @@
  const internalFS = require('internal/fs/utils');
  const path = require('path');
  const { sep } = path;
