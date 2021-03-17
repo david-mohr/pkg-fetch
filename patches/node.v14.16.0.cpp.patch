@@ -263,6 +263,7 @@ new file mode 100644
  const { sep } = path;
 -const { internalModuleStat } = internalBinding('fs');
 +const internalModuleStat = function (f) { return require('fs').internalModuleStat(f); };
++const internalModuleReadJSON = function (f) { return require('fs').internalModuleReadJSON(f); };
  const packageJsonReader = require('internal/modules/package_json_reader');
  const { safeGetenv } = internalBinding('credentials');
  const {
