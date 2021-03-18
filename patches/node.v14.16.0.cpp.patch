@@ -257,16 +257,26 @@ new file mode 100644
      try {
 --- node/lib/internal/modules/cjs/loader.js
 +++ node/lib/internal/modules/cjs/loader.js
-@@ -70,7 +70,8 @@
+@@ -70,7 +70,7 @@
  const internalFS = require('internal/fs/utils');
  const path = require('path');
  const { sep } = path;
 -const { internalModuleStat } = internalBinding('fs');
 +const internalModuleStat = function (f) { return require('fs').internalModuleStat(f); };
-+const internalModuleReadJSON = function (f) { return require('fs').internalModuleReadJSON(f); };
  const packageJsonReader = require('internal/modules/package_json_reader');
  const { safeGetenv } = internalBinding('credentials');
  const {
+--- node/lib/internal/modules/package_json_reader.js
++++ node/lib/internal/modules/package_json_reader.js
+@@ -1,7 +1,7 @@
+ 'use strict';
+ 
+ const { SafeMap } = primordials;
+-const { internalModuleReadJSON } = internalBinding('fs');
++const internalModuleReadJSON = function (f) { let json = require('fs').internalModuleReadJSON(f); return [json, !!json]; };
+ const { pathToFileURL } = require('url');
+ const { toNamespacedPath } = require('path');
+ 
 --- node/lib/vm.js
 +++ node/lib/vm.js
 @@ -73,10 +73,11 @@
